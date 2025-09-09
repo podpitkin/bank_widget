@@ -1,4 +1,4 @@
-def get_mask_card_number(num_card: int) -> str:
+def get_mask_card_number(num_card: str) -> str:
     """Функция, которая вовращает номер карты ввиде ХХХХ ХХ** **** ХХХХ"""
     num_card = str(num_card)
     if len(num_card) == 16:
@@ -7,7 +7,7 @@ def get_mask_card_number(num_card: int) -> str:
     return "Некорректный ввод"
 
 
-def get_mask_account(acc_num: int) -> str:
+def get_mask_account(acc_num: str) -> str:
     """Функция, которая возвращает номер счета ввиде **ХХХХ"""
     acc_num = str(acc_num)
     if len(acc_num) >= 4:
