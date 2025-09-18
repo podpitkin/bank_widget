@@ -3,7 +3,7 @@ from src.widget import mask_account_card
 from widget import get_date
 
 
-@pytest.mark.parametrize("bank_name, expected",[
+@pytest.mark.parametrize("bank_name, expected", [
     ("Счет 12345678901234567890", "Счет **7890"),
     ("Visa Platinum 1234567890123456", "Visa Platinum 1234 56** **** 3456"),
     ("Maestro 7000792289606361", "Maestro 7000 79** **** 6361")
