@@ -6,9 +6,13 @@ def test_filter_by_currency(trans):
     result = list(filter_by_currency(trans, "USD"))
     expected = [
         {
-            'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572', 'operationAmount':
-            {'amount': '9824.07', 'currency': {'name': 'USD', 'code': 'USD'}},
-            'description': 'Перевод организации', 'from': 'Счет 75106830613657916952', 'to': 'Счет 11776614605963066702'
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702",
         },
         {
             "id": 142264268,
@@ -27,10 +31,9 @@ def test_filter_by_currency(trans):
             "description": "Перевод с карты на карту",
             "from": "Visa Classic 6831982476737658",
             "to": "Visa Platinum 8990922113665229",
-        }
+        },
     ]
     assert result == expected
-
 
 
 def test_transaction_descriptions(trans):
@@ -40,31 +43,33 @@ def test_transaction_descriptions(trans):
         "Перевод со счета на счет",
         "Перевод со счета на счет",
         "Перевод с карты на карту",
-        "Перевод организации"
+        "Перевод организации",
     ]
 
     assert len(descriptions) == len(expected)
     assert descriptions == expected
 
 
-@pytest.mark.parametrize('start, end, expected', [
-    (1, 5, [
-        "0000 0000 0000 0001",
-        "0000 0000 0000 0002",
-        "0000 0000 0000 0003",
-        "0000 0000 0000 0004",
-        "0000 0000 0000 0005"
-    ]),
-    (0, 2, [
-        "0000 0000 0000 0000",
-        "0000 0000 0000 0001",
-        "0000 0000 0000 0002"
-    ])
-])
+@pytest.mark.parametrize(
+    "start, end, expected",
+    [
+        (
+            1,
+            5,
+            [
+                "0000 0000 0000 0001",
+                "0000 0000 0000 0002",
+                "0000 0000 0000 0003",
+                "0000 0000 0000 0004",
+                "0000 0000 0000 0005",
+            ],
+        ),
+        (0, 2, ["0000 0000 0000 0000", "0000 0000 0000 0001", "0000 0000 0000 0002"]),
+    ],
+)
 def test_card_number_generator(start, end, expected):
     generated_numbers = list(card_number_generator(start, end))
     assert generated_numbers == expected
-
 
 
 def test_card_num_generator(card_num):
