@@ -2,7 +2,7 @@ from masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(name_num_card: str) -> str:
-    """Функция, которая обрабатывает информацию о картах или счетах счетах"""
+    """Функция, которая обрабатывает информацию о картах или счетах"""
     card_split = name_num_card.rsplit(" ", 1)
     num_card = card_split[1]
     if card_split[0] == "Счет":
