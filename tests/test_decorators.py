@@ -1,6 +1,7 @@
 import pytest
 from decorators import my_function
 
+
 def test_my_function():
     my_function(2, 3)
     with open("my_log.txt", "r") as log_file:
