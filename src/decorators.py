@@ -2,7 +2,7 @@ import time
 from functools import wraps
 
 
-def log(filename):
+def log(filename=None):
     """Декоратор log, который автоматически регистрирует детали выполнения функций"""
 
     def wrapper(func):
@@ -32,6 +32,7 @@ def log(filename):
                 else:
                     print(error_msg)
                 raise
+            return result
 
         return inner
 
