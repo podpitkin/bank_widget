@@ -70,3 +70,8 @@ def trans():
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+@pytest.fixture
+def transaction():
+    return 31957.58
