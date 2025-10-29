@@ -31,7 +31,3 @@ def get_mask_account(acc_num: str) -> str:
         return mask_acc
     logger.error("Ввели некорректный номер счета")
     return "Некорректный ввод"
-
-
-# get_mask_card_number(1234567890123456)
-# get_mask_account(12345678456)
