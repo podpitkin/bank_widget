@@ -1,13 +1,14 @@
 import csv
 import pandas as pd
+import json
 
 
 def read_csv(path):
     """Функция считывает файл формата .csv  """
     try:
-        with open(path, encoding="utf-8") as file:
-            reader_csv = csv.DictReader(file)
-            return reader_csv
+        df = pd.read_csv(path)
+        df_dict = df.to_dict('records')
+        return json.dumps(df_dict, ensure_ascii=False, indent=4)
     except FileNotFoundError:
         return []
 
@@ -16,6 +17,10 @@ def read_excel(path):
     """Функция считывает файл формата .excel  """
     try:
         df = pd.read_excel(path)
-        return df
+        df_dict = df.to_dict('records')
+        return json.dumps(df_dict, ensure_ascii=False, indent=4)
     except FileNotFoundError:
         return []
+
+# print(read_csv('../data/transactions.csv'))
+# print(read_excel('../data/transactions_excel.xlsx'))
