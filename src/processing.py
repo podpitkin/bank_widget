@@ -1,5 +1,5 @@
-def filter_by_state(dict_list: list, state: list = "EXECUTED") -> list:
-    """Функция, которая возвращает значениe по ключу"""
+def filter_by_state(dict_list, state):
+    """Функция, которая возвращает значения по ключу"""
     new_dict = []
     for dict in dict_list:
         if dict.get("state") == state:

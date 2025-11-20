@@ -75,3 +75,66 @@ def trans():
 @pytest.fixture
 def transaction():
     return 31957.58
+
+@pytest.fixture
+def data():
+    return [
+        {
+            "id": 596171168,
+            "state": "EXECUTED",
+            "date": "2018-07-11T02:26:18.671407",
+            "operationAmount": {
+            "amount": "79931.03",
+            "currency": {
+            "name": "руб.",
+            "code": "RUB"
+                }
+            },
+            "description": "Открытие вклада",
+            "to": "Счет 72082042523231456215"
+        },
+        {
+            "id": 863064926,
+            "state": "EXECUTED",
+            "date": "2019-12-08T22:46:21.935582",
+            "operationAmount": {
+            "amount": "41096.24",
+            "currency": {
+            "name": "USD",
+            "code": "USD"
+                }
+            },
+            "description": "Открытие вклада",
+            "to": "Счет 90424923579946435907"
+        },
+        {
+            "id": 476991061,
+            "state": "CANCELED",
+            "date": "2018-11-23T17:47:33.127140",
+            "operationAmount": {
+                "amount": "26971.25",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод с карты на карту",
+            "from": "Visa Gold 7305799447374042",
+            "to": "Maestro 3364923093037194"
+        },
+        {
+            "id": 970724427,
+            "state": "CANCELED",
+            "date": "2019-01-15T17:58:27.064377",
+            "operationAmount": {
+                "amount": "90688.44",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Visa Platinum 2241653116508487",
+            "to": "Счет 26494285169417058486"
+        }
+    ]
