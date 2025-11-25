@@ -3,6 +3,8 @@ from generators import filter_by_currency
 from processing import filter_by_state, sort_by_date
 from utils import read_file
 import pandas as pd
+from widget import mask_account_card, get_date
+
 
 
 def main():
@@ -30,7 +32,7 @@ def main():
         print('\nПрограмма: Для обработки выбран XLSX-файл.\n')
         df = pd.read_excel('../data/transactions_excel.xlsx')
         json_data = df.to_json(orient='records', force_ascii=False, indent=2)
-        with open('../data/csv_js.json', 'w', encoding='utf-8') as f:
+        with open('../data/ex_js.json', 'w', encoding='utf-8') as f:
             f.write(json_data)
         data = read_file('../data/ex_js.json')
     else:
@@ -52,7 +54,7 @@ def main():
     while True:
         sort_date_input = input('''
 Программа: Отсортировать операции по дате? Да/Нет
-     
+
  Пользователь: ''').lower()
         if sort_date_input in ['да', 'нет']:
             break
@@ -92,10 +94,44 @@ def main():
         search_word = input('Программа: Введите слово для поиска: ').lower()
         data = process_bank_search(data, search_word)
 
-    print('Программа: Распечатываю итоговый список транзакций...')
-    print(f'Программа:Всего банковских операций в выборке: {len(data)}')
+    filter_data = []
+    for transaction in data:
 
-    return data
+        from_value = transaction.get('from')  # тут я проверила пустое ли поле from в файлах
+        if from_value:
+            transaction['from'] = mask_account_card(from_value)
+
+        to_value = transaction.get('to')
+        if to_value:
+            transaction['to'] = mask_account_card(to_value)
+
+        filter_data.append(transaction)
+    data = filter_data
+    if data == []:
+        print('Программа: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
+    if data != []:
+        print('Программа: Распечатываю итоговый список транзакций...')
+        print(f'Программа:Всего банковских операций в выборке: {len(data)}\n')
+        for transaction in data:
+            if 'operationAmount' in transaction:
+                amount = transaction['operationAmount']['amount']
+                currency_name = transaction['operationAmount'].get('currency', {}).get('name')
+            else:
+                amount = transaction['amount']
+                currency_name = transaction.get('currency_code')
+            date_obj = transaction.get('date')
+            date = get_date(date_obj)
+            description = transaction.get('description')
+            from_account = transaction.get('from')
+            to_account = transaction.get('to')
+
+
+            print(f'{date} {description}')
+            if from_account and to_account:
+                print(f'{from_account} -> {to_account}')
+            elif to_account:
+                print(f'{to_account}')
+            print(f'Сумма: {amount} {currency_name}\n')
 
 # if __name__ == '__main__':
 #     print(main())
