@@ -1,4 +1,4 @@
-from description import process_bank_search, process_bank_operations
+from description import process_bank_search
 from generators import filter_by_currency
 from processing import filter_by_state, sort_by_date
 from utils import read_file
@@ -27,7 +27,7 @@ def main():
         json_data = df.to_json(orient='records', force_ascii=False, indent=2)
         with open('../data/csv_js.json', 'w', encoding='utf-8') as f:
             f.write(json_data)
-        data = read_file('../data/ex_js.json')
+        data = read_file('../data/csv_js.json')
     elif input_user == 3:
         print('\nПрограмма: Для обработки выбран XLSX-файл.\n')
         df = pd.read_excel('../data/transactions_excel.xlsx')
@@ -50,6 +50,8 @@ def main():
             data = filter_by_state(data, input_status)
             break
         print(f'Программа: Статус операции "{input_status}" недоступен.')
+    if data == []:
+        return 'Программа: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
 
     while True:
         sort_date_input = input('''
@@ -97,7 +99,7 @@ def main():
     filter_data = []
     for transaction in data:
 
-        from_value = transaction.get('from')  # тут я проверила пустое ли поле from в файлах
+        from_value = transaction.get('from')
         if from_value:
             transaction['from'] = mask_account_card(from_value)
 
@@ -107,11 +109,10 @@ def main():
 
         filter_data.append(transaction)
     data = filter_data
-    if data == []:
-        print('Программа: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
+
     if data != []:
-        print('Программа: Распечатываю итоговый список транзакций...')
-        print(f'Программа:Всего банковских операций в выборке: {len(data)}\n')
+        print('\nПрограмма: Распечатываю итоговый список транзакций...\n')
+        print(f'Программа:\nВсего банковских операций в выборке: {len(data)}\n')
         for transaction in data:
             if 'operationAmount' in transaction:
                 amount = transaction['operationAmount']['amount']
