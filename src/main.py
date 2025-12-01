@@ -1,9 +1,10 @@
 from description import process_bank_search
 from generators import filter_by_currency
+from pattern import pattern
 from processing import filter_by_state, sort_by_date
 from utils import read_file
 import pandas as pd
-from widget import mask_account_card, get_date
+from widget import mask_account_card
 
 
 
@@ -111,28 +112,9 @@ def main():
     data = filter_data
 
     if data != []:
-        print('\nПрограмма: Распечатываю итоговый список транзакций...\n')
-        print(f'Программа:\nВсего банковских операций в выборке: {len(data)}\n')
-        for transaction in data:
-            if 'operationAmount' in transaction:
-                amount = transaction['operationAmount']['amount']
-                currency_name = transaction['operationAmount'].get('currency', {}).get('name')
-            else:
-                amount = transaction['amount']
-                currency_name = transaction.get('currency_code')
-            date_obj = transaction.get('date')
-            date = get_date(date_obj)
-            description = transaction.get('description')
-            from_account = transaction.get('from')
-            to_account = transaction.get('to')
+        data = pattern(data)
+    return data
 
 
-            print(f'{date} {description}')
-            if from_account and to_account:
-                print(f'{from_account} -> {to_account}')
-            elif to_account:
-                print(f'{to_account}')
-            print(f'Сумма: {amount} {currency_name}\n')
-
-# if __name__ == '__main__':
-#     print(main())
+if __name__ == '__main__':
+    print(main())
